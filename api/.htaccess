@@ -1,0 +1,4 @@
+#Rewrite for API - Forces all the requests to the index file. Code from: http://stackoverflow.com/questions/991063/simple-mvc-mod-rewrite
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php [L,NS]
