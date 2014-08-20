@@ -1,6 +1,6 @@
 <?php
 	
-class FrontController{
+class Router{
 		
 	/**
 	 * Property: request
@@ -13,7 +13,7 @@ class FrontController{
 	 * Property: resource
 	 * The resource the client wants to access.
 	 */
-	 private $resource;	 
+	private $controller;	 
 	
 	/**
 	* Property: method 
@@ -27,18 +27,34 @@ class FrontController{
 	 * (eg.: api/users/{19191})
 	 */
 	private $arguments;
+	
+	/**
+	 * Constant: root
+	 * Where to start parsing the route.
+	 */
+	const ROOT_POSITION = 4;
 		
 
 	public function __construct( $request ) {
 		$this->request = $request;
 	}
 	
+	public function __get( $property ) {
+		return $this->$property;
+	}
+	
 	public function parseRequest() {
-		$path = explode("/", $this->request);
-		//Må dynamisk endre seg etter hvor stor 
-		//$this->resource = $path[''];
-		//echo $this->resource;
-		var_dump($path);
+		//Split the request into an array:
+		$path = explode('/', $this->request);
+		//Get the controller:
+		$this->controller = $path[ $this::ROOT_POSITION ];
+		//Get arguments:
+		$args = array();
+		for($i = $this::ROOT_POSITION + 1; $i < sizeof($path); $i++) {
+			$args[$i] = $path[$i];
+		}
+		
+		$this->arguments = $args;
 	}
 	
 	public function __toString() {
