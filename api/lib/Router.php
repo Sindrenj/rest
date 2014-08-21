@@ -6,37 +6,39 @@ class Router{
 	 * Property: request
 	 * The unparsed request-uri.
 	 */
-	private $request;
+	protected $request;
 	
 	
 	/**
 	 * Property: resource
 	 * The resource the client wants to access.
 	 */
-	private $controller;	 
+	protected $controller;	 
 	
 	/**
 	* Property: method 
 	* The request method (GET/POST etc..)
 	*/
-	private $method;
+	protected $method;
 	
 	 /**
 	 * Property: arguments
 	 * Arguments that are necessary to fullfill the request.
 	 * (eg.: api/users/{19191})
 	 */
-	private $arguments;
+	 protected $arguments = array();
 	
 	/**
-	 * Constant: root
+	 * Property: name_of_endpoint
 	 * Where to start parsing the route.
 	 */
-	const ROOT_POSITION = 4;
+	 protected $name_of_endpoint;
 		
 
-	public function __construct( $request ) {
+	public function __construct( $request, $method, $name_of_endpoint) {
 		$this->request = $request;
+		$this->method = $method;
+		$this->name_of_endpoint = $name_of_endpoint;
 	}
 	
 	public function __get( $property ) {
@@ -44,17 +46,19 @@ class Router{
 	}
 	
 	public function parseRequest() {
-		//Split the request into an array:
-		$path = explode('/', $this->request);
+		//Get the length of NAME_OF_ENDPOINT:
+		$pathLength = strlen( $this->name_of_endpoint ) + 1;
+		//Strip the request for information we dont need:
+		$parsedRequest = substr( $this->request, strpos( $this->request, $this->name_of_endpoint ) + $pathLength );
+		//Split the $request into an array for easier use:	    
+	    $path = explode( '/', $parsedRequest );
 		//Get the controller:
-		$this->controller = $path[ $this::ROOT_POSITION ];
-		//Get arguments:
-		$args = array();
-		for($i = $this::ROOT_POSITION + 1; $i < sizeof($path); $i++) {
-			$args[$i] = $path[$i];
+		$this->controller = $path[0];
+		//Get the arguments:
+		if( !empty($path[1]) ) {
+			array_shift($path);
+			$this->arguments = $path;
 		}
-		
-		$this->arguments = $args;
 	}
 	
 	public function __toString() {
