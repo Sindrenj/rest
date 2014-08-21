@@ -41,8 +41,8 @@ class Router{
 		$this->name_of_endpoint = $name_of_endpoint;
 	}
 	
-	public function __get( $property ) {
-		return $this->$property;
+	public function getController() {
+		return $this->controller;
 	}
 	
 	public function parseRequest() {
