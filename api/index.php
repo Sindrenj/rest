@@ -19,7 +19,9 @@
 	if( $r->getController() != "" ) {
 		if( class_exists($controllerName) ) {
 			//Include the files:	
-			echo new $controllerName($r->getMethod(), new Model());
+			$controller = new $controllerName($r->getMethod(), new Model());
+			//Give a response:
+			echo $controller->response();
 		} else {
 			header('HTTP/1.0 400 Bad Request');
 			echo "The request cannot be fullfilled. Cannot find the resource: " . $route->getController();

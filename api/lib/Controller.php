@@ -19,9 +19,17 @@ class Controller{
 		$this->model = $model;
 		$this->method = $method;
 	}
+	
+	public function response() {
+		$name = $this->method();
+		return call_user_func(self, $name);
+	}
+	
 		
 	public function GET() {
-		return $this->model->data;
+		header('Content-Type: application/json');
+		return json_encode($this->model->data);
+		
 	}
 	
 	public function POST( $data ) {
