@@ -1,6 +1,1 @@
-<?php
-
-interface Database {
-	
-}
 
