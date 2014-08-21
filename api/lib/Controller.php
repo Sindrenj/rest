@@ -3,20 +3,21 @@
 class Controller{
 	
 	/**
-	 * Property: $method
-	 * The way the client is interacting with the service.
-	 */
-	protected $method;
-	
-	/**
 	 * Property: $model
 	 * The model with the data.
 	 */
 	protected $model;
 	
-	public function __construct( $method, $model ) {
-		$this->method = $method;
+	/**
+	 * Property: $method
+	 * The way the client is interacting with the service.
+	 */
+	protected $method;
+	
+		
+	public function __construct( $model, $method ) {
 		$this->model = $model;
+		$this->method = $method;
 	}
 		
 	public function GET() {
@@ -52,6 +53,6 @@ class Controller{
 	}
 	
 	public function __toString() {
-		return "The method: " . $method . ", the model: " . $model;
+		return "The method: " . $this->method . ", the model: " . $this->model;
 	}
 }

@@ -2,11 +2,8 @@
 
 class UsersController extends Controller{
 	
-	public function __construct( $method, $model ) {
-		parent::__construct( $method, $model );
+	public function __construct( $model, $method ) {
+		parent::__construct( $model, $method );
 	}
 	
-	public function __toString() {
-		
-	}
 }

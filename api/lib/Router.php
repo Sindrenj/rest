@@ -45,6 +45,10 @@ class Router{
 		return $this->controller;
 	}
 	
+	public function getMethod() {
+		return $this->method;
+	}
+	
 	public function parseRequest() {
 		//Get the length of NAME_OF_ENDPOINT:
 		$pathLength = strlen( $this->name_of_endpoint ) + 1;

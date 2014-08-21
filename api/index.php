@@ -4,29 +4,22 @@
 	* Entrypointfile for the REST-Service.
 	* - Sindre Njøsen
 	*/
-	//Set endpoint-file:
+	//Set the endpoint-filename(Where to parse from):
 	DEFINE('NAME_OF_ENDPOINT', '/api');
-	//Set paths to files:
-	DEFINE('CONTROLLER_PATH', 'lib/Controllers/');
-	DEFINE('MODEL_PATH', 'lib/Models');
-	//Include necessary files:
-	include_once "lib/Router.php";
+	//Include the loaders:
+	include_once "lib/Loaders.php";
 	
-
 	//1. Get the correct route and method:
-    $route = new Router( $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], NAME_OF_ENDPOINT );
-	//2. Parse the URI to get the requested resource(s): 
-	$route->parseRequest();	 
-	//3. ....:
-	//Create the filepath:
-	$filePath = CONTROLLER_PATH . $route->getController() . "Controller.php";
-	
-		
-	if( $route->getController() != "" ) {
-		if( file_exists( $filePath)) {
+    $r = new Router( $_SERVER['REQUEST_URI'], $_SERVER['REQUEST_METHOD'], NAME_OF_ENDPOINT );
+	//2. Parse the URI to get the requested path to the resource:
+	$r->parseRequest();	 
+	//3. Create the filepath:
+	$controllerName = $r->getController() . "Controller";
+	//4. Create the controller and the model:
+	if( $r->getController() != "" ) {
+		if( class_exists($controllerName) ) {
 			//Include the files:	
-			include_once $filePath;
-			
+			echo new $controllerName($r->getMethod(), new Model());
 		} else {
 			header('HTTP/1.0 400 Bad Request');
 			echo "The request cannot be fullfilled. Cannot find the resource: " . $route->getController();
@@ -35,6 +28,16 @@
 		header('HTTP/1.0 400 Bad Request');
 		echo "Unknown request, no path defined.";
 	}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 			
 	function debug() {

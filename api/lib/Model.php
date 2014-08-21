@@ -21,6 +21,6 @@ class Model{
 	}
 			
 	public function __toString() {
-		return $this->db;
+		return "THIS IS MODEL!";
 	}
 }
