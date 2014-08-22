@@ -19,16 +19,15 @@
 	if( $r->getController() != "" ) {
 		if( class_exists($controllerName) ) {
 			//Include the files:	
-			$controller = new $controllerName($r->getMethod(), new Model());
+			$controller = new $controllerName(new User(), $r->getMethod());
 			//Give a response:
-			echo $controller->response();
+			echo $controller->response( $r->getArguments() );
+			//var_dump($r->getArguments());
 		} else {
-			header('HTTP/1.0 400 Bad Request');
-			echo "The request cannot be fullfilled. Cannot find the resource: " . $route->getController();
+			echo Response::clientError(400, "The request cannot be fullfilled. Cannot find the resource: " . $r->getController());
 		}
 	} else {
-		header('HTTP/1.0 400 Bad Request');
-		echo "Unknown request, no path defined.";
+		Response::clientError(400, "Unknown request, no path defined.");
 	}
 		
 		
