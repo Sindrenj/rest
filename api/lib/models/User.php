@@ -6,13 +6,17 @@ class User extends Model{
 	}
 	
 	public function getAll() {
-		$sql = "Select user_id, name, RealName, email From _t1txp_users";
+		$sql = "Select user_id, name, RealName, email From _ttxp_users";
 		return $this->db->select($sql, null);
 	}
 	
 	public function get( $user ) {
-		$sql = "Select user_id, name, RealName, email from _t1txp_users where user_id = " . $user;
+		$sql = "Select user_id, name, RealName, email from _ttxp_users where user_id = " . $user;
 		return $this->db->select($sql, null);
+	}
+	
+	public function create( $user ){
+		$sql = "Insert into user";
 	}
 	
 	public function delete( $user ) {

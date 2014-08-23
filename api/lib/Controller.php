@@ -31,7 +31,7 @@ abstract class Controller{
 		return Response::JSON($this->model->getData());
 	}
 	
-	public function POST( $data = null ) {
+	public function POST() {
 		echo "Kom til post";
 	}
 	
