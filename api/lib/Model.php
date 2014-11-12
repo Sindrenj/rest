@@ -8,6 +8,6 @@ class Model{
 	}
 			
 	public function __toString() {
-		return "THIS IS MODEL!";
+		return "This is the model";
 	}
 }
